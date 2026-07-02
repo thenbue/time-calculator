@@ -135,8 +135,10 @@ output:
 ## Building from Source
 
 ```bash
-go mod tidy
-go build -ldflags="-s -w" -o time-calculator
+# Using gh
+gh repo clone thenbue/time-calculator
+# using git
+git clone https://github.com/thenbue/time-calculator#
 ```
 
 ## Contributing

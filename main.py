@@ -20,60 +20,62 @@ async def calculate(x):
         if x.sunset is None:
             x.sunset = 20
         time = x.sunrise + x.degree / 180 * (x.sunset - x.sunrise)
-        return time + x.sunrise
+        return time
     except Exception as e:
         print(f"Error: {e}: line 25")
+        x.dec = "file load; Error"
 
 
 async def decide(x):
+    print(f"PATH: {x.path}")
     try:
         if x.path.endswith(".yaml"):
-            await yaml(x)
+            await yamle(x)
         elif x.path.endswith(".json"):
-            await json(x)
+            await jeason(x)
         elif x.path.endswith(".toml"):
-            await toml(x)
+            await toelo(x)
         else:
             x.dec = "Requiring valid & supported file; Error"
     except Exception as e:
         print(f"Error: {e}: line 39")
 
 
-async def json(x):
+async def jeason(x):
     try:
         import json
 
-        with open(x.path) as file:
+        with open(x.path, "r", encoding="utf-8-sig") as file:
             cfg = json.load(file)
-        x.sunrise = cfg.get("sunrise", None)
-        x.degree = cfg.get("degree", None)
-        x.sunset = cfg.get("sunset", None)
+        x.sunrise = cfg.get("sunrise")
+        x.sunset = cfg.get("sunset")
+        x.degree = cfg.get("degree")
     except Exception as e:
         print(f"Error: {e}: line 52")
 
 
-async def toml(x):
+async def toelo(x):
     try:
         import toml
 
-        with open(x.path) as file:
+        with open(x.path, "r") as file:
             x.cfg = toml.load(file)
-            x.sunrise = x.cfg["sunrise"]
-            x.degree = x.cfg["degree"]
-            x.sunset = x.cfg["sunset"]
+            x.sunrise = x.cfg.get("sunrise")
+            x.degree = x.cfg.get("degree")
+            x.sunset = x.cfg.get("sunset")
     except Exception as e:
         print(f"Error: {e}: line 65")
 
 
-async def yaml(x):
+async def yamle(x):
     try:
         import yaml
 
-        with open(x.path) as file:
+        with open(x.path, "r") as file:
             x.cfg = yaml.safe_load(file)
-            x.sunrise = x.cfg["sunrise"]
-            x.degree = x.cfg["degree"]
-            x.sunset = x.cfg["sunset"]
+            x.sunrise = x.cfg.get("sunrise")
+            x.degree = x.cfg.get("degree")
+            x.sunset = x.cfg.get("sunset")
     except Exception as e:
         print(f"Error {e}: line 78")
 
