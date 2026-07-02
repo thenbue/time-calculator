@@ -3,82 +3,102 @@ import asyncio
 
 class variables:
     def __init__(self):
-        self.path = (
-            "./settings/settings.yaml"
-            or "./settings/settings.json"
-            or "./settings/settings.toml"
-        )
-        self.sunrise = 6
-        self.sunset = 20
-        self.degree = 0
-        self.degree_default = 0
-        self.sunrise_default = 6
-        self.sunset_default = 20
+        self.sunrise = None
+        self.degree = None
+        self.sunset = None
+        self.state = False
+        self.path = "./settings/settings.json"
+        self.dec = "0"
 
 
 async def calculate(x):
-    if x.sunrise != "default" or x.degree != "default" or x.sunset != "default":
+    try:
+        if x.sunrise is None:
+            x.sunrise = 6
+        if x.degree is None:
+            x.degree = 0
+        if x.sunset is None:
+            x.sunset = 20
         time = x.sunrise + x.degree / 180 * (x.sunset - x.sunrise)
         return time + x.sunrise
-    if x.sunrise == "default":
-        if x.degree == "default":
-            if x.sunset == "default":
-                print("")
+    except Exception as e:
+        print(f"Error: {e}: line 25")
 
 
 async def decide(x):
-    if x.path.endswith(".yaml"):
-        await yaml(x)
-    elif x.path.endswith(".json"):
-        await json(x)
-    elif x.path.endswith(".toml"):
-        await toml(x)
-    else:
-        raise "Error: requiring valid & supported file"
+    try:
+        if x.path.endswith(".yaml"):
+            await yaml(x)
+        elif x.path.endswith(".json"):
+            await json(x)
+        elif x.path.endswith(".toml"):
+            await toml(x)
+        else:
+            x.dec = "Requiring valid & supported file; Error"
+    except Exception as e:
+        print(f"Error: {e}: line 39")
 
 
 async def json(x):
-    import json
+    try:
+        import json
 
-    with open(x.path) as file:
-        x.cfg = json.load(file)
-        x.sunrise = x.cfg.get("world", "default").get("sunrise", "default")
-        x.degree = x.cfg.get("world", "default").get("degree", "default")
-        x.sunset = x.cfg.get("world", "default").get("sunset", "default")
+        with open(x.path) as file:
+            cfg = json.load(file)
+        x.sunrise = cfg.get("sunrise", None)
+        x.degree = cfg.get("degree", None)
+        x.sunset = cfg.get("sunset", None)
+    except Exception as e:
+        print(f"Error: {e}: line 52")
 
 
 async def toml(x):
-    import toml
+    try:
+        import toml
 
-    with open(x.path) as file:
-        x.cfg = toml.load(file)
-        x.sunrise = x.cfg["world"]["sunrise"]
-        x.degree = x.cfg["world"]["degree"]
-        x.sunset = x.cfg["world"]["sunset"]
+        with open(x.path) as file:
+            x.cfg = toml.load(file)
+            x.sunrise = x.cfg["sunrise"]
+            x.degree = x.cfg["degree"]
+            x.sunset = x.cfg["sunset"]
+    except Exception as e:
+        print(f"Error: {e}: line 65")
 
 
 async def yaml(x):
-    import yaml
+    try:
+        import yaml
 
-    with open(x.path) as file:
-        x.cfg = yaml.safe_load(file)
-        x.sunrise = x.cfg["world"]["sunrise"]
-        x.degree = x.cfg["world"]["degree"]
-        x.sunset = x.cfg["world"]["sunset"]
+        with open(x.path) as file:
+            x.cfg = yaml.safe_load(file)
+            x.sunrise = x.cfg["sunrise"]
+            x.degree = x.cfg["degree"]
+            x.sunset = x.cfg["sunset"]
+    except Exception as e:
+        print(f"Error {e}: line 78")
 
 
-async def main(STATE=False):
+async def main():
     launch = True
-    while launch:
-        if STATE:
+    try:
+        while launch:
             print("Main Loaded")
-        x = variables()
-        dec = await decide(x)
-        if dec != "Error: requiring valid & supported file" and STATE:
-            print("done Deciding File type")
-        answer = await calculate(x)
-        print(answer)
+            x = variables()
+            await decide(x)
+            if x.dec.endswith("; Error"):
+                print("File Not found, quitting")
+                return True
+            else:
+                print("done Deciding File type")
+                answer = await calculate(x)
+                print(answer)
+                return True
+    except Exception as e:
+        print(f"Error:{e}: line 97")
         return True
 
 
-asyncio.run(main(STATE=False))
+try:
+    asyncio.run(main())
+except Exception as Error:
+    print(f"Error: {Error}")
