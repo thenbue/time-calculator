@@ -2,6 +2,11 @@
 
 ---
 
+#### v2.0.1
+
+- Added changelog.md
+- improved readme.md
+
 #### v2
 
 - Unified YAML / JSON / TOML config system
