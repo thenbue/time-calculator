@@ -1,4 +1,4 @@
-# Time Calculator
+<center> Time Calculator </center>
 
 > A CLI tool for calculating time from sunset, solar noon, or degrees.
 
@@ -20,114 +20,55 @@ py main.py
 # Or download binary from Releases
 ```
 
-## Quick Start
-
-<details>
-<summary>Change config.json via PowerShell</summary>
-
-```powershell
-@'
-{
-    "world": {
-        "sunrise": 6.0,
-        "sunset": 20.0,
-        "degree": 50
-    }
-}
-'@ | Out-File -Encoding utf8 "./settings/settings.json"
-```
-
-</details>
-
-<details>
-<summary>Change .toml via PowerShell</summary>
-
-```powershell
-@'
-[world]
-sunrise = 6.0
-sunset = 20.0
-degree = 50
-'@ | Out-File -Encoding utf8 "./settings/settings.json"
-```
-
-</details>
-
-<details>
-<summary>Change .yaml via PowerShell</summary>
-
-```powershell
-@'
-world:
-  sunrise: 6.0
-  sunset: 20.0
-  degree: 50
-'@ | Out-File -Encoding utf8 "./settings/settings.json"
-```
-
-</details>
-
-```bash
-time-calculator calc --config config.yaml
-```
-
 ## Configuration
 
-| Format | Example File  |
+| Format | File          |
 | ------ | ------------- |
 | YAML   | `config.yaml` |
 | TOML   | `config.toml` |
 | JSON   | `config.json` |
 
-**Key settings:**
+<details>
 
-```yaml
-location:
-  latitude: 40.7128
-  longitude: -74.0060
-  timezone: "America/New_York"
-calculation:
-  method: "degrees" # sunset | sunnoon | degrees
-  angle: 18.0 # degrees below horizon
-output:
-  format: "table" # table | json | csv
-  timezone: "local" # local | utc
+<summary>Sample TOML config</summary>
+
+```toml
+sunrise = 6.0
+sunset = 20.0
+degree = 50
+
+
 ```
 
-## Usage
-
-```bash
-# Calculate from sunset
-time-calculator calc --method sunset --angle 18
-
-# Calculate from solar noon
-time-calculator calc --method sunnoon --angle 90
-
-# From config file
-time-calculator calc -c config.yaml
-
-# Output formats
-time-calculator calc --format json
-time-calculator calc --format table
-time-calculator calc --format csv
-```
-
-## Examples
+</details>
 
 <details>
 <summary>Sample YAML config</summary>
 
 ```yaml
-location:
-  latitude: 51.5074
-  longitude: -0.1278
-  timezone: "Europe/London"
-calculation:
-  method: "degrees"
-  angle: 15.0
-output:
-  format: "table"
-  timezone: "local"
+sunrise: 6.0
+sunset: 20.0
+degree: 50
+```
+
+</details>
+<details>
+<summary>Sample JSON config</summary>
+
+```json
+{
+  "sunrise": 6.0,
+  "sunset": 20.0,
+  "degree": 50
+}
+```
+
+</details>
+
+## Usage
+
+```powershell
+py main.py
 ```
 
 </details>
@@ -135,10 +76,10 @@ output:
 ## Building from Source
 
 ```bash
-# Using gh
+# via gh
 gh repo clone thenbue/time-calculator
-# using git
-git clone https://github.com/thenbue/time-calculator#
+# via git
+git clone https://github.com/thenbue/time-calculator
 ```
 
 ## Contributing
@@ -147,6 +88,10 @@ git clone https://github.com/thenbue/time-calculator#
 2. Create feature branch (`git checkout -b feature/xyz`)
 3. Commit changes (`git commit -m 'Add xyz'`)
 4. Push and open PR
+
+## Notice
+
+Not to the minute accurate
 
 ## License
 
