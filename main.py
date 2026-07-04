@@ -22,7 +22,7 @@ async def calculate(x):
         time = x.sunrise + x.degree / 180 * (x.sunset - x.sunrise)
         return time
     except Exception as e:
-        print(f"Error: {e}: line 25")
+        print(f"Error: {e}: fn calculate")
         x.dec = "file load; Error"
 
 
@@ -38,7 +38,7 @@ async def decide(x):
         else:
             x.dec = "Requiring valid & supported file; Error"
     except Exception as e:
-        print(f"Error: {e}: line 39")
+        print(f"Error: {e}: fn decide")
 
 
 async def jeason(x):
@@ -51,7 +51,7 @@ async def jeason(x):
         x.sunset = cfg.get("sunset")
         x.degree = cfg.get("degree")
     except Exception as e:
-        print(f"Error: {e}: line 52")
+        print(f"Error: {e}: fn json")
 
 
 async def toelo(x):
@@ -64,7 +64,7 @@ async def toelo(x):
             x.degree = x.cfg.get("degree")
             x.sunset = x.cfg.get("sunset")
     except Exception as e:
-        print(f"Error: {e}: line 65")
+        print(f"Error: {e}: fn toml")
 
 
 async def yamle(x):
@@ -77,7 +77,7 @@ async def yamle(x):
             x.degree = x.cfg.get("degree")
             x.sunset = x.cfg.get("sunset")
     except Exception as e:
-        print(f"Error {e}: line 78")
+        print(f"Error {e}: fn yaml")
 
 
 async def main():
@@ -92,11 +92,11 @@ async def main():
                 return True
             else:
                 print("done Deciding File type")
-                answer = await calculate(x)
-                print(answer)
+                t = await calculate(x)
+                print(f"{int(t)}:{ int(t * 60) % 60}")
                 return True
     except Exception as e:
-        print(f"Error:{e}: line 97")
+        print(f"Error:{e}: fn main")
         return True
 
 
