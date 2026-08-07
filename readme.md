@@ -1,28 +1,27 @@
 # Time Calculator
 
-> A PY-CLI tool for calculating relative solar time offsets using configuration files.
+> A tool for calculating relative solar time offsets using <JSON/YAML/TOML/> files.
 
----
+
 
 ## Quick Start
 
-### Version 1
+#### v1
 
-Runs using the default configuration file at `./settings/settings.json`.
+runs using coded path, requires edit if you use something else instead of JSON.
+```bash
+python main.py
+```
+
+### v2
+
+Supports custom file paths and input if missing.
 
 ```bash
 python main.py
 ```
 
-### Version 2
-
-Supports custom file paths and multiple configuration formats (`.json`, `.yaml`, `.toml`).
-
-```bash
-python main.py
-```
-
-If no file path is set in the code, the script will prompt you to enter one at runtime.
+If no file path is set in the code, the script will prompt you to enter one at runtime. )
 
 ---
 
@@ -30,7 +29,7 @@ If no file path is set in the code, the script will prompt you to enter one at r
 
 Place your configuration file in your project directory using one of the supported formats:
 
-### JSON (`settings.json`)
+### JSON (`usage/settings.json`)
 
 ```json
 {
@@ -38,10 +37,9 @@ Place your configuration file in your project directory using one of the support
   "sunset": 20.0,
   "degree": 50.0
 }
-
 ```
 
-### TOML (`settings.toml`)
+### TOML (`usage/settings.toml`)
 
 ```toml
 sunrise = 6.0
@@ -49,21 +47,20 @@ sunset = 20.0
 degree = 50.0
 ```
 
-### YAML (`settings.yaml`)
+### YAML (`usage/settings.yaml`)
 
 ```yaml
 sunrise: 6.0
 sunset: 20.0
 degree: 50.0
-
 ```
 
 ---
 
 ## Key Differences
 
-* **v1:** Basic linear calculation using a hardcoded JSON path.
-* **v2:** Added support for YAML/TOML, interactive path entry, and stricter input validation.
+* **v1:** Basic calculation using a hardcoded JSON path with support for YAML/TOML.
+* **(v2):** Added interactive path entry, and stricter input validation.
 
 ---
 

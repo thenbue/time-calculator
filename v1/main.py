@@ -82,12 +82,9 @@ def main():
                 t = calculate(x)
                 print(f"{int(t)}:{int(t * 60) % 60}")
                 return True
-    except Exception as e:
-        print(f"Error:{e}: fn main")
+    except ValueError as e:
+        print(f"{e}: at fn main")
         return True
 
 
-try:
-    asyncio.run(main())
-except Exception as Error:
-    print(f"Error: {Error}")
+asyncio.run(main())
