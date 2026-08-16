@@ -1,10 +1,10 @@
 # v2
 
 # Uncomment the path for your settings, or use input.
-path = "./../usage/main.json"
+path = None
+# path = "./../usage/main.json"
 # path = "./../usage/main.toml"
 # path = "./../usage/main.yaml"
-# path = None
 if path is None:
     print("file.type supported by default: main.yaml, main.toml, main.json")
     path = input("enter path (./../usage/main.type): ")
