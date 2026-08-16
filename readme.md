@@ -61,4 +61,4 @@ degree: 50.0
 
 ---
 
-For version details and release notes, see [CHANGELOG.md](CHANGELOG.md).
+For version details and release notes, see [changslogs](changelogs.md).
